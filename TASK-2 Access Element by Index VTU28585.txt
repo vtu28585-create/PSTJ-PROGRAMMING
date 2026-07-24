@@ -1,0 +1,12 @@
+TASK-2:Access Element by Index
+
+class Task {
+    public static void main(String[] args) {
+        int[] a = {10,20,30,40,50};
+        int i = 2;
+        System.out.println(a[i]);
+    }
+}
+
+
+OUTPUT:30

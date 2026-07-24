@@ -1,0 +1,48 @@
+Task 7: Sum of Even or Odd Digits
+
+
+
+import java.util.Scanner;
+
+public class DigitSum {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number: ");
+        int n = sc.nextInt();
+
+        System.out.print("1-Even 2-Odd: ");
+        int choice = sc.nextInt();
+
+        int sum = 0;
+
+        while (n > 0) {
+            int digit = n % 10;
+
+            if (choice == 1 && digit % 2 == 0)
+                sum += digit;
+
+            if (choice == 2 && digit % 2 != 0)
+                sum += digit;
+
+            n /= 10;
+        }
+
+        System.out.println("Sum = " + sum);
+    }
+}
+
+
+Output (Even):
+
+Enter number: 123456
+1-Even 2-Odd: 1
+Sum = 12
+
+
+Output (Odd):
+
+Enter number: 123456
+1-Even 2-Odd: 2
+Sum = 9
