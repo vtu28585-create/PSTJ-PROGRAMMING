@@ -1,0 +1,166 @@
+Strassen’s Matrix Multiplication
+
+TASK-1
+
+class Solution {
+    public int[][] matrixBlockSum(int[][] mat, int k) {
+        int m = mat.length, n = mat[0].length;
+        int[][] pre = new int[m + 1][n + 1];
+        int[][] ans = new int[m][n];
+
+        // Prefix sum
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                pre[i + 1][j + 1] = mat[i][j]
+                        + pre[i][j + 1]
+                        + pre[i + 1][j]
+                        - pre[i][j];
+            }
+        }
+
+        // Calculate each block sum
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int r1 = Math.max(0, i - k);
+                int c1 = Math.max(0, j - k);
+                int r2 = Math.min(m - 1, i + k);
+                int c2 = Math.min(n - 1, j + k);
+
+                ans[i][j] = pre[r2 + 1][c2 + 1]
+                        - pre[r1][c2 + 1]
+                        - pre[r2 + 1][c1]
+                        + pre[r1][c1];
+            }
+        }
+
+        return ans;
+    }
+}
+
+OUTPUT:
+
+Input
+mat =
+[[1,2,3],[4,5,6],[7,8,9]]
+k =
+1
+Output
+[[12,21,16],[27,45,33],[24,39,28]]
+Expected
+[[12,21,16],[27,45,33],[24,39,28]]
+
+
+
+TASK-2
+
+
+import java.io.*;
+import java.util.*;
+
+class Result {
+
+    public static void matrixRotation(List<List<Integer>> matrix, int r) {
+
+        int m = matrix.size();
+        int n = matrix.get(0).size();
+
+        for (int layer = 0; layer < Math.min(m, n) / 2; layer++) {
+
+            List<Integer> temp = new ArrayList<>();
+
+            // Top
+            for (int j = layer; j < n - layer; j++)
+                temp.add(matrix.get(layer).get(j));
+
+            // Right
+            for (int i = layer + 1; i < m - layer; i++)
+                temp.add(matrix.get(i).get(n - layer - 1));
+
+            // Bottom
+            for (int j = n - layer - 2; j >= layer; j--)
+                temp.add(matrix.get(m - layer - 1).get(j));
+
+            // Left
+            for (int i = m - layer - 2; i > layer; i--)
+                temp.add(matrix.get(i).get(layer));
+
+            int size = temp.size();
+            int index = r % size;
+
+            // Top
+            for (int j = layer; j < n - layer; j++)
+                matrix.get(layer).set(j, temp.get(index++ % size));
+
+            // Right
+            for (int i = layer + 1; i < m - layer; i++)
+                matrix.get(i).set(n - layer - 1, temp.get(index++ % size));
+
+            // Bottom
+            for (int j = n - layer - 2; j >= layer; j--)
+                matrix.get(m - layer - 1).set(j, temp.get(index++ % size));
+
+            // Left
+            for (int i = m - layer - 2; i > layer; i--)
+                matrix.get(i).set(layer, temp.get(index++ % size));
+        }
+
+        // Print matrix
+        for (List<Integer> row : matrix) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+
+        String[] input = br.readLine().split(" ");
+
+        int m = Integer.parseInt(input[0]);
+        int n = Integer.parseInt(input[1]);
+        int r = Integer.parseInt(input[2]);
+
+        List<List<Integer>> matrix = new ArrayList<>();
+
+        for (int i = 0; i < m; i++) {
+
+            String[] values = br.readLine().split(" ");
+            List<Integer> row = new ArrayList<>();
+
+            for (String value : values) {
+                row.add(Integer.parseInt(value));
+            }
+
+            matrix.add(row);
+        }
+
+        Result.matrixRotation(matrix, r);
+
+        br.close();
+    }
+}
+
+OUTPUT:
+Input (stdin)
+4 4 1
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+Your Output (stdout)
+2 3 4 8 
+1 7 11 12 
+5 6 10 16 
+9 13 14 15 
+Expected Output
+2 3 4 8
+1 7 11 12
+5 6 10 16
+9 13 14 15
