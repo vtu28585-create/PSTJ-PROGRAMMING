@@ -1,0 +1,107 @@
+Task-1 Java Date and Time
+
+import java.io.*;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
+class Result {
+
+    public static String findDay(int month, int day, int year) {
+
+        LocalDate date = LocalDate.of(year, month, day);
+
+        return date.getDayOfWeek()
+                   .getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+                   .toUpperCase();
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader =
+                new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+                new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] firstMultipleInput =
+                bufferedReader.readLine().split(" ");
+
+        int month = Integer.parseInt(firstMultipleInput[0]);
+        int day = Integer.parseInt(firstMultipleInput[1]);
+        int year = Integer.parseInt(firstMultipleInput[2]);
+
+        String res = Result.findDay(month, day, year);
+
+        bufferedWriter.write(res);
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+OUTPUT
+
+Input (stdin)
+08 05 2015
+
+Output (stdout)
+WEDNESDAY
+
+Expected Output
+WEDNESDA
+
+
+ 2. Number of Days Between Two Dates
+
+
+
+
+class Solution {
+    public int daysBetweenDates(String date1, String date2) {
+        return Math.abs(toDays(date1) - toDays(date2));
+    }
+
+    private int toDays(String date) {
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5, 7));
+        int day = Integer.parseInt(date.substring(8, 10));
+
+        int days = 0;
+
+        // Days in previous years
+        for (int y = 1971; y < year; y++) {
+            if (isLeap(y)) {
+                days += 366;
+            } else {
+                days += 365;
+            }
+        }
+
+        // Days in previous months of current year
+        int[] monthDays = {
+            31, 28, 31, 30, 31, 30,
+            31, 31, 30, 31, 30, 31
+        };
+
+        for (int m = 1; m < month; m++) {
+            days += monthDays[m - 1];
+
+            if (m == 2 && isLeap(year)) {
+                days++;
+            }
+        }
+
+        days += day;
+
+        return days;
+    }
+
+    private boolean isLeap(int year) {
+        return (year % 400 == 0) ||
+               (year % 4 == 0 && year % 100 != 0);
+    }
+}

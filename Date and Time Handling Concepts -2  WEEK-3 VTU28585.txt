@@ -1,0 +1,106 @@
+Date and Time Handling Concepts 
+
+1. Day of the Year
+
+
+class Solution {
+    public int dayOfYear(String date) {
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5, 7));
+        int day = Integer.parseInt(date.substring(8, 10));
+
+        int[] daysInMonth = {31, 28, 31, 30, 31, 30,
+                             31, 31, 30, 31, 30, 31};
+
+        // Check for leap year
+        if ((year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)) {
+            daysInMonth[1] = 29;
+        }
+
+        int dayNumber = day;
+
+        // Add days from previous months
+        for (int i = 0; i < month - 1; i++) {
+            dayNumber += daysInMonth[i];
+        }
+
+        return dayNumber;
+    }
+}
+
+
+
+OUTPUT
+
+Input
+date =
+"2019-01-09"
+Output
+9
+Expected
+9
+
+
+
+
+2.Day of the Week
+
+
+
+
+class Solution {
+    public String dayOfTheWeek(int day, int month, int year) {
+
+        String[] days = {
+            "Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday", "Saturday"
+        };
+
+        int[] months = {
+            31, 28, 31, 30, 31, 30,
+            31, 31, 30, 31, 30, 31
+        };
+
+        int totalDays = 0;
+
+        // Count days from 1971 to the previous year
+        for (int y = 1971; y < year; y++) {
+            totalDays += isLeap(y) ? 366 : 365;
+        }
+
+        // Count days from January to the previous month
+        for (int m = 1; m < month; m++) {
+            totalDays += months[m - 1];
+
+            if (m == 2 && isLeap(year)) {
+                totalDays++;
+            }
+        }
+
+        // Add current day
+        totalDays += day;
+
+        // January 1, 1971, was Friday
+        return days[(totalDays + 4) % 7];
+    }
+
+    private boolean isLeap(int year) {
+        return (year % 400 == 0) ||
+               (year % 4 == 0 && year % 100 != 0);
+    }
+}
+
+OUTPUT
+
+Input
+day =
+31
+month =
+8
+year =
+2019
+Output
+"Saturday"
+Expected
+"Saturday 
+

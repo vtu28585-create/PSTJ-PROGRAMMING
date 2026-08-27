@@ -1,0 +1,56 @@
+Custom Comparators & Sorting Logic 
+
+
+1. Sort Characters by Frequency 
+
+
+
+import java.util.*;
+
+class Solution {
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+
+        // Count frequency
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) + 1);
+            } else {
+                map.put(ch, 1);
+            }
+        }
+
+        // Sort characters by frequency
+        ArrayList<Character> list = new ArrayList<Character>(map.keySet());
+
+        Collections.sort(list, new Comparator<Character>() {
+            public int compare(Character a, Character b) {
+                return map.get(b) - map.get(a);
+            }
+        });
+
+        // Build result
+        StringBuilder result = new StringBuilder();
+
+        for (char ch : list) {
+            for (int i = 0; i < map.get(ch); i++) {
+                result.append(ch);
+            }
+        }
+
+        return result.toString();
+    }
+}
+
+
+OUTPUT
+
+Input
+s =
+"tree"
+Output
+"eert"
+Expected
+"eert"
