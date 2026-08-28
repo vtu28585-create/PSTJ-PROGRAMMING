@@ -1,0 +1,114 @@
+String Handling Basics 
+
+
+TASK-5
+
+class Solution {
+    public int myAtoi(String s) {
+        int i = 0;
+        int n = s.length();
+
+        // Remove leading spaces
+        while (i < n && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        // Check sign
+        int sign = 1;
+
+        if (i < n && s.charAt(i) == '-') {
+            sign = -1;
+            i++;
+        } else if (i < n && s.charAt(i) == '+') {
+            i++;
+        }
+
+        int result = 0;
+
+        // Read digits
+        while (i < n && s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+
+            int digit = s.charAt(i) - '0';
+
+            // Check integer overflow
+            if (result > (Integer.MAX_VALUE - digit) / 10) {
+                if (sign == 1) {
+                    return Integer.MAX_VALUE;
+                } else {
+                    return Integer.MIN_VALUE;
+                }
+            }
+
+            result = result * 10 + digit;
+            i++;
+        }
+
+        return result * sign;
+    }
+}
+
+
+
+OUTPUT
+
+Input
+s =
+"42"
+Output
+42
+Expected
+42
+
+
+TASK-6
+
+
+import java.util.*;
+
+class Result {
+
+    public static int alternatingCharacters(String s) {
+        int count = 0;
+
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int q = sc.nextInt();
+
+        while (q-- > 0) {
+            String s = sc.next();
+            System.out.println(Result.alternatingCharacters(s));
+        }
+
+        sc.close();
+    }
+}
+
+
+OUTPUT
+
+Input (stdin)
+5
+AAAA
+BBBBB
+ABABABAB
+BABABA
+AAABBB
+Expected Output
+3
+4
+0
+0
+4

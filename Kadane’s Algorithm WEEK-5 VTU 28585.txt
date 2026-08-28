@@ -1,0 +1,140 @@
+Kadane’s Algorithm
+
+
+TASK-3
+
+
+import java.util.*;
+
+class Result {
+
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+
+        int current = arr.get(0);
+        int maxSubarray = arr.get(0);
+
+        int maxSubsequence = 0;
+        int maxElement = arr.get(0);
+
+        for (int i = 0; i < arr.size(); i++) {
+
+            int value = arr.get(i);
+
+            // Maximum subarray
+            if (i > 0) {
+                current = Math.max(value, current + value);
+                maxSubarray = Math.max(maxSubarray, current);
+            }
+
+            // Maximum subsequence
+            if (value > 0) {
+                maxSubsequence += value;
+            }
+
+            // Find largest element
+            maxElement = Math.max(maxElement, value);
+        }
+
+        // If all elements are negative
+        if (maxSubsequence == 0) {
+            maxSubsequence = maxElement;
+        }
+
+        return Arrays.asList(maxSubarray, maxSubsequence);
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+
+            int n = sc.nextInt();
+
+            List<Integer> arr = new ArrayList<>();
+
+            for (int i = 0; i < n; i++) {
+                arr.add(sc.nextInt());
+            }
+
+            List<Integer> result = Result.maxSubarray(arr);
+
+            System.out.println(result.get(0) + " " + result.get(1));
+        }
+
+        sc.close();
+    }
+}
+
+
+
+OUTPUT
+
+Input (stdin)
+2
+4
+1 2 3 4
+6
+2 -1 2 3 4 -5
+Your Output (stdout)
+10 10
+10 11
+Expected Output
+10 10
+10 11
+
+
+
+
+TASK-4
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+
+        int total = 0;
+
+        int currentMax = 0;
+        int maxSum = nums[0];
+
+        int currentMin = 0;
+        int minSum = nums[0];
+
+        for (int num : nums) {
+
+            // Maximum subarray sum
+            currentMax = Math.max(num, currentMax + num);
+            maxSum = Math.max(maxSum, currentMax);
+
+            // Minimum subarray sum
+            currentMin = Math.min(num, currentMin + num);
+            minSum = Math.min(minSum, currentMin);
+
+            total += num;
+        }
+
+        // If all numbers are negative
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        // Maximum circular sum
+        return Math.max(maxSum, total - minSum);
+    }
+}
+
+
+
+OUTPUT
+
+
+Input
+nums =
+[1,-2,3,-2]
+Output
+3
+Expected
+3

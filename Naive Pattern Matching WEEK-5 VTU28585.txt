@@ -1,0 +1,95 @@
+ Naive Pattern Matching 
+
+TASK-9
+
+
+import java.util.*;
+
+class Solution {
+    public List<String> stringMatching(String[] words) {
+
+        List<String> result = new ArrayList<String>();
+
+        for (int i = 0; i < words.length; i++) {
+
+            for (int j = 0; j < words.length; j++) {
+
+                if (i != j && words[j].contains(words[i])) {
+                    result.add(words[i]);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+}
+
+
+OUTPUT
+
+Input
+words =
+["mass","as","hero","superhero"]
+Output
+["as","hero"]
+Expected
+["as","hero"]
+
+
+TASK-10
+
+import java.util.ArrayList;
+
+public class GFG {
+
+    // Function to search for all occurrences of 'pat' in 'txt' using Naive Approach
+    static ArrayList<Integer> search(String pat, String txt)
+    {
+        // Length of the pattern
+        int m = pat.length();
+
+        // Length of the text
+        int n = txt.length();
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        // Slide the pattern over text one by one
+        for (int i = 0; i <= n - m; i++)
+        {
+            int j;
+
+            // Check for pattern match at index i
+            for (j = 0; j < m; j++)
+            {
+                if (txt.charAt(i + j) != pat.charAt(j))
+                    break;
+            }
+
+            // If pattern matches, store index
+            if (j == m)
+                ans.add(i);
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args)
+    {
+        String txt = "aabaacaadaabaaba";
+        String pat = "aaba";
+
+        ArrayList<Integer> res = search(pat, txt);
+
+        for (int it : res)
+        {
+            System.out.print(it + " ");
+        }
+    }
+}
+
+
+OUTPUT
+
+0 9 12 
+/
