@@ -1,0 +1,126 @@
+Palindrome Techniques 
+
+
+TASK-1
+
+
+import java.util.*;
+
+class Result {
+
+    public static int palindromeIndex(String s) {
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+
+            if (s.charAt(left) != s.charAt(right)) {
+
+                // Try removing left character
+                if (isPalindrome(s, left + 1, right)) {
+                    return left;
+                }
+
+                // Otherwise remove right character
+                if (isPalindrome(s, left, right - 1)) {
+                    return right;
+                }
+
+                return -1;
+            }
+
+            left++;
+            right--;
+        }
+
+        return -1;
+    }
+
+    public static boolean isPalindrome(String s, int left, int right) {
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int q = sc.nextInt();
+
+        while (q-- > 0) {
+
+            String s = sc.next();
+
+            System.out.println(Result.palindromeIndex(s));
+        }
+
+        sc.close();
+    }
+}
+
+
+OUTPUT
+
+Input (stdin)
+3
+aaab
+baa
+aaa
+Expected Output
+3
+0
+-1
+
+
+TASK-2
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+
+        if (m > n) {
+            return -1;
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+            int j = 0;
+
+            while (j < m && haystack.charAt(i + j) == needle.charAt(j)) {
+                j++;
+            }
+
+            if (j == m) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+
+
+OUTPUT
+
+Input
+haystack =
+"sadbutsad"
+needle =
+"sad"
+Output
+0
+Expected
+0

@@ -1,0 +1,113 @@
+KMP Algorithm 
+
+TASK-1
+
+
+import java.util.*;
+
+class Result {
+
+    public static long stringSimilarity(String s) {
+        int n = s.length();
+        int[] z = new int[n];
+
+        int left = 0;
+        int right = 0;
+
+        long sum = n;
+
+        for (int i = 1; i < n; i++) {
+
+            if (i <= right) {
+                z[i] = Math.min(right - i + 1, z[i - left]);
+            }
+
+            while (i + z[i] < n &&
+                   s.charAt(z[i]) == s.charAt(i + z[i])) {
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+                left = i;
+                right = i + z[i] - 1;
+            }
+
+            sum += z[i];
+        }
+
+        return sum;
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            String s = sc.next();
+            System.out.println(Result.stringSimilarity(s));
+        }
+
+        sc.close();
+    }
+}
+
+
+
+
+
+OUTPUT:
+
+Input (stdin)
+2
+ababaa
+aa
+Expected Output
+11
+3
+
+
+
+TASK-2
+
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        int n = s.length();
+
+        for (int len = 1; len <= n / 2; len++) {
+            if (n % len != 0) {
+                continue;
+            }
+
+            String sub = s.substring(0, len);
+            StringBuilder str = new StringBuilder();
+
+            for (int i = 0; i < n / len; i++) {
+                str.append(sub);
+            }
+
+            if (str.toString().equals(s)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+
+oUTPUT
+
+
+Input
+s =
+"abab"
+Output
+true
+Expected
+true
+

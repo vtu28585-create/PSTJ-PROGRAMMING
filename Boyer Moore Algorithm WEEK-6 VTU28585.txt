@@ -1,0 +1,100 @@
+Boyer Moore Algorithm
+
+
+TASK-1
+
+
+import java.util.*;
+
+class Result {
+
+    public static int marsExploration(String s) {
+
+        int count = 0;
+        String message = "SOS";
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != message.charAt(i % 3)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.nextLine();
+
+        System.out.println(Result.marsExploration(s));
+
+        sc.close();
+    }
+}
+
+
+
+OUTPUT
+
+
+Input (stdin)
+SOSSPSSQSSOR
+Expected Output
+3
+
+
+
+TASK-2
+
+
+import java.util.*;
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> result = new ArrayList<>();
+
+        if (s.length() < p.length()) {
+            return result;
+        }
+
+        int[] pCount = new int[26];
+        int[] window = new int[26];
+
+        for (char c : p.toCharArray()) {
+            pCount[c - 'a']++;
+        }
+
+        int k = p.length();
+
+        for (int i = 0; i < s.length(); i++) {
+            window[s.charAt(i) - 'a']++;
+
+            if (i >= k) {
+                window[s.charAt(i - k) - 'a']--;
+            }
+
+            if (Arrays.equals(pCount, window)) {
+                result.add(i - k + 1);
+            }
+        }
+
+        return result;
+    }
+}
+
+OUTPUT
+
+Input
+s =
+"cbaebabacd"
+p =
+"abc"
+Output
+[0,6]
+Expected
+[0,6]
