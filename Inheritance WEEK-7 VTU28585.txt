@@ -1,0 +1,80 @@
+Inheritance
+
+
+TASK-1
+
+
+
+class Animal {
+    void walk() {
+        System.out.println("I am walking");
+    }
+}
+
+class Bird extends Animal {
+    void fly() {
+        System.out.println("I am flying");
+    }
+
+    void sing() {
+        System.out.println("I am singing");
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Bird bird = new Bird();
+
+        bird.walk();
+        bird.fly();
+        bird.sing();
+    }
+}
+
+
+OUTPUT
+
+Your Output (stdout)
+I am walking
+I am flying
+I am singing
+Expected Output
+I am walking
+I am flying
+I am singing
+
+
+TASK-2
+
+class Arithmetic {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+
+class Adder extends Arithmetic {
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Adder adder = new Adder();
+
+        System.out.println("My superclass is: "
+                + adder.getClass().getSuperclass().getName());
+
+        System.out.println(adder.add(20, 22) + " "
+                + adder.add(10, 3) + " "
+                + adder.add(10, 10));
+    }
+}
+
+OUTPUT
+
+Your Output (stdout)
+My superclass is: Arithmetic
+42 13 20
+Expected Output
+My superclass is: Arithmetic
+42 13 20

@@ -1,0 +1,122 @@
+Class to class interaction
+
+
+TASK-1
+
+import java.util.*;
+
+class UndergroundSystem {
+
+    // customerId -> [startStation, startTime]
+    private Map<Integer, CheckIn> checkIns;
+
+    // route -> [totalTime, numberOfTrips]
+    private Map<String, Route> routes;
+
+    public UndergroundSystem() {
+        checkIns = new HashMap<>();
+        routes = new HashMap<>();
+    }
+
+    public void checkIn(int id, String stationName, int t) {
+        checkIns.put(id, new CheckIn(stationName, t));
+    }
+
+    public void checkOut(int id, String stationName, int t) {
+        CheckIn checkIn = checkIns.get(id);
+
+        String route = checkIn.station + "->" + stationName;
+        int travelTime = t - checkIn.time;
+
+        if (!routes.containsKey(route)) {
+            routes.put(route, new Route());
+        }
+
+        Route r = routes.get(route);
+        r.totalTime += travelTime;
+        r.count++;
+
+        checkIns.remove(id);
+    }
+
+    public double getAverageTime(String startStation, String endStation) {
+        String route = startStation + "->" + endStation;
+
+        Route r = routes.get(route);
+
+        return (double) r.totalTime / r.count;
+    }
+
+    class CheckIn {
+        String station;
+        int time;
+
+        CheckIn(String station, int time) {
+            this.station = station;
+            this.time = time;
+        }
+    }
+
+    class Route {
+        int totalTime = 0;
+        int count = 0;
+    }
+}
+
+
+OUTPUT
+
+
+Input
+["UndergroundSystem","checkIn","checkIn","checkIn","checkOut","checkOut","checkOut","getAverageTime","getAverageTime","checkIn","getAverageTime","checkOut","getAverageTime"]
+[[],[45,"Leyton",3],[32,"Paradise",8],[27,"Leyton",10],[45,"Waterloo",15],[27,"Waterloo",20],[32,"Cambridge",22],["Paradise","Cambridge"],["Leyton","Waterloo"],[10,"Leyton",24],["Leyton","Waterloo"],[10,"Waterloo",38],["Leyton","Waterloo"]]
+Output
+[null,null,null,null,null,null,null,14.00000,11.00000,null,11.00000,null,12.00000]
+Expected
+[null,null,null,null,null,null,null,14.00000,11.00000,null,11.00000,null,12.00000]
+
+
+
+  TASK-2
+
+
+class BrowserHistory {
+
+    private String[] history;
+    private int current;
+    private int end;
+
+    public BrowserHistory(String homepage) {
+        history = new String[5001];
+        history[0] = homepage;
+        current = 0;
+        end = 0;
+    }
+
+    public void visit(String url) {
+        current++;
+        history[current] = url;
+        end = current;
+    }
+
+    public String back(int steps) {
+        current = Math.max(0, current - steps);
+        return history[current];
+    }
+
+    public String forward(int steps) {
+        current = Math.min(end, current + steps);
+        return history[current];
+    }
+}
+
+
+OUTPUT
+
+Input
+["BrowserHistory","visit","visit","visit","back","back","forward","visit","forward","back","back"]
+[["leetcode.com"],["google.com"],["facebook.com"],["youtube.com"],[1],[1],[1],["linkedin.com"],[2],[2],[7]]
+Output
+[null,null,null,null,"facebook.com","google.com","facebook.com",null,"linkedin.com","google.com","leetcode.com"]
+Expected
+[null,null,null,null,"facebook.com","google.com","facebook.com",null,"linkedin.com","google.com","leetcode.com"]
