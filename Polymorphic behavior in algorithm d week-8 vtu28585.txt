@@ -1,0 +1,98 @@
+Polymorphic behavior in algorithm design 
+
+
+TAS-1
+
+
+class Sports {
+    String getName() {
+        return "Generic Sports";
+    }
+
+    void getNumberOfTeamMembers() {
+        System.out.println("Each team has n players in " + getName());
+    }
+}
+
+class Soccer extends Sports {
+    @Override
+    String getName() {
+        return "Soccer Class";
+    }
+
+    @Override
+    void getNumberOfTeamMembers() {
+        System.out.println("Each team has 11 players in " + getName());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Sports sports = new Sports();
+        Soccer soccer = new Soccer();
+
+        System.out.println(sports.getName());
+        sports.getNumberOfTeamMembers();
+
+        System.out.println(soccer.getName());
+        soccer.getNumberOfTeamMembers();
+    }
+}
+
+OUTPUT
+
+Your Output (stdout)
+Generic Sports
+Each team has n players in Generic Sports
+Soccer Class
+Each team has 11 players in Soccer Class
+
+
+Expected Output
+
+Generic Sports
+Each team has n players in Generic Sports
+Soccer Class
+Each team has 11 players in Soccer Class
+
+
+
+task-2
+
+
+class Cycle {
+    String define_me() {
+        return "a vehicle with pedals.";
+    }
+}
+
+class Motorcycle extends Cycle {
+    String define_me() {
+        return "a cycle with an engine.";
+    }
+
+    Motorcycle() {
+        System.out.println("Hello I am a motorcycle, I am " + define_me());
+        System.out.println("My ancestor is a cycle who is " + super.define_me());
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Motorcycle M = new Motorcycle();
+    }
+}
+
+
+output
+
+
+Your Output (stdout)
+
+Hello I am a motorcycle, I am a cycle with an engine.
+My ancestor is a cycle who is a vehicle with pedals.
+
+Expected Output
+
+Hello I am a motorcycle, I am a cycle with an engine.
+My ancestor is a cycle who is a vehicle with pedals.

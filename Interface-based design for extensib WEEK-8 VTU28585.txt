@@ -1,0 +1,123 @@
+Interface-based design for extensibility 
+
+
+TASK-1
+
+
+
+
+import java.util.*;
+
+public class Solution {
+
+    public static void func(ArrayList mylist) {
+        Iterator it = mylist.iterator();
+
+        while (it.hasNext()) {
+            Object element = it.next();
+
+            if (element.equals("###")) {
+                break;
+            }
+        }
+
+        while (it.hasNext()) {
+            Object element = it.next();
+            System.out.println((String) element);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        ArrayList mylist = new ArrayList();
+
+        for (int i = 0; i < n; i++) {
+            mylist.add(sc.nextInt());
+        }
+
+        mylist.add("###");
+
+        for (int i = 0; i < m; i++) {
+            mylist.add(sc.next());
+        }
+
+        func(mylist);
+
+        sc.close();
+    }
+}
+
+
+OUTPUT
+
+
+Input (stdin)
+2 2
+42
+10
+hello
+java
+Your Output (stdout)
+hello
+java
+Expected Output
+hello
+java
+
+
+TASK-2
+
+import java.util.*;
+
+interface AdvancedArithmetic {
+    int divisor_sum(int n);
+}
+
+class MyCalculator implements AdvancedArithmetic {
+
+    public int divisor_sum(int n) {
+        int sum = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                sum += i;
+            }
+        }
+
+        return sum;
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        MyCalculator calculator = new MyCalculator();
+
+        System.out.println("I implemented: " + calculator.getClass()
+                .getInterfaces()[0].getSimpleName());
+
+        System.out.println(calculator.divisor_sum(n));
+
+        sc.close();
+    }
+}
+
+
+
+OUTPUT
+
+Input (stdin)
+6
+Your Output (stdout)
+I implemented: AdvancedArithmetic
+12
+Expected Output
+I implemented: AdvancedArithmetic
+12
